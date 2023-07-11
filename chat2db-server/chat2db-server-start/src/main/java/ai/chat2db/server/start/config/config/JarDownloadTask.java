@@ -1,0 +1,34 @@
+
+package ai.chat2db.server.start.config.config;
+
+import ai.chat2db.spi.sql.Chat2DBContext;
+import ai.chat2db.spi.util.JdbcJarUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * @author jipengfei
+ * @version : JarDownloadTask.java
+ */
+@Component
+@Slf4j
+public class JarDownloadTask implements CommandLineRunner {
+
+    @Override
+    public void run(String... args) throws Exception {
+        List<String> urls = new ArrayList<>();
+        Chat2DBContext.PLUGIN_MAP.forEach((k, v) -> {
+            v.getDBConfig().getDriverConfigList().forEach(driverConfig -> {
+                if (driverConfig != null && !CollectionUtils.isEmpty(driverConfig.getDownloadJdbcDriverUrls())) {
+                    urls.addAll(driverConfig.getDownloadJdbcDriverUrls());
+                }
+            });
+        });
+        JdbcJarUtils.asyncDownload(urls);
+    }
+}
