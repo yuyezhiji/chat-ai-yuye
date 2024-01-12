@@ -2,6 +2,8 @@
 
 <div align="center">
 
+
+
  An intelligent and versatile general-purpose SQL client and reporting tool for databases which integrates ChatGPT capabilities.
 
 [![License](https://img.shields.io/github/license/alibaba/fastjson2?color=4D7A97&logo=apache)](https://www.apache.org/licenses/LICENSE-2.0.html)
